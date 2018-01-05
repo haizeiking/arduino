@@ -5,31 +5,30 @@
 #define MOTOR_B 8
 #define MOTOR_SPEED 6
 #define SERVO 5
+#define FRONT_LIGHTS 11
+#define REAR_LIGHTS 12
 
 // servo limits 30 - 90 - 150
 
 SoftwareSerial Bluetooth(10, 9); // RX, TX
-int LED = 13; // the on-board LED
 char cmd; // the data received
 
 Servo myservo;  // create servo object to control a servo
  
 uint16_t speed = 0;
 
-enum Direction {
-  LEFT,
-  CENTER,
-  RIGHT
-} CarDirection;
-
 void setup() {
   Bluetooth.begin(9600);
   Serial.begin(9600);
   Serial.println("Waiting for command...");
 
-  pinMode(LED,OUTPUT);
+  pinMode(FRONT_LIGHTS, OUTPUT);
+  pinMode(REAR_LIGHTS, OUTPUT);
 
   myservo.attach(SERVO);
+
+  digitalWrite(FRONT_LIGHTS, LOW);
+  digitalWrite(REAR_LIGHTS, LOW);
 }
  
 void loop() {
@@ -143,10 +142,24 @@ void Left() {
 }
 
 void Ligths(char cmd) {
-  // W/w - front ligths
+    // W/w - front ligths
   // U/u - back ligths
   Serial.println("ligths");
   Serial.println(cmd);
+  switch(cmd) {
+    case 'W':
+      digitalWrite(FRONT_LIGHTS,HIGH);
+    break;
+    case 'w':
+      digitalWrite(FRONT_LIGHTS,LOW);
+    break;
+    case 'U':
+      digitalWrite(REAR_LIGHTS,HIGH);
+    break;
+    case 'u':
+      digitalWrite(REAR_LIGHTS,LOW);
+    break;
+  }
 }
 
 void Horn(char cmd) {
@@ -213,6 +226,13 @@ void CarBackwardLeft() {
 void Break() {
   digitalWrite(MOTOR_A, LOW);
   digitalWrite(MOTOR_B, LOW);
+
+  // turn on rear lights for a short period
+  digitalWrite(REAR_LIGHTS, HIGH);
+  delay(200);
+  digitalWrite(REAR_LIGHTS, LOW);
+  
+  
 }
 
 void ServoPosition(int angle) {
