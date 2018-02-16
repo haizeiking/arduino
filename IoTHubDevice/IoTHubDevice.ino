@@ -12,9 +12,10 @@
 #include <AzureIoTUtility.h>
 #include <AzureIoTHub.h>
 #include <AzureIoTProtocol_MQTT.h>
+#include "Timer.h"
 
-String ssid                         = "wifi_ssid";        // your network SSID (name)
-String pass                         = "wifi_pass";  // your network password (use for WPA, or use as key for WEP)
+String ssid                         = "ssid";        // your network SSID (name)
+String pass                         = "pass";  // your network password (use for WPA, or use as key for WEP)
 static const char* connectionString = "device_connection_string";
                       
 
@@ -23,6 +24,7 @@ IOTHUB_CLIENT_STATUS status;
 
 WiFiClientSecure espClient;
 
+Timer t;
 
 void initWifi() {
     if (WiFi.status() != WL_CONNECTED) 
@@ -55,7 +57,7 @@ void initTime() {
         epochTime = time(NULL);
 
         if (epochTime == 0) {
-            Serial.println("Fetching NTP epoch time failed! Waiting 2 seconds to retry.");
+            Serial.println("Failed fetching NTP epoch time failed! Waiting 2 seconds to retry.");
             delay(2000);
         } else {
             Serial.print("Fetched NTP epoch time is: ");
@@ -182,16 +184,22 @@ void LEDOff() {
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
+  Serial.println("Starting...");
   initWifi();
   pinMode(LED_BUILTIN, OUTPUT);
   LEDOff();
+  t.every(60*10*1000, ping);
 }
 
 void loop() {
+  t.update();
+}
+
+void ping() {
   initWifi();         // always checking the WiFi connection
   LEDOn();
-
+  
   // we will process every message in the Hub
   while ((IoTHubClient_LL_GetSendStatus(iotHubClientHandle, &status) == IOTHUB_CLIENT_OK) && (status == IOTHUB_CLIENT_SEND_STATUS_BUSY))
   {
@@ -199,11 +207,11 @@ void loop() {
       ThreadAPI_Sleep(1000);
   }
   
-  String  JSONMessage = "{\'alive\':";
-          JSONMessage += "I am alive";
+  String  JSONMessage = "{\'name\':";
+          JSONMessage += "\'ESP01Work\'";
           JSONMessage += "}";
+  //Serial.println(JSONMessage.c_str());
   sendMessage(JSONMessage.c_str());  
 
   LEDOff();
-  delay(5000);
 }
