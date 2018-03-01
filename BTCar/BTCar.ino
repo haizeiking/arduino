@@ -1,3 +1,5 @@
+//HC-05 bluetooth module used. Pair using password 1234
+
 #include <SoftwareSerial.h>
 #include <Servo.h>
 
@@ -34,6 +36,7 @@ void setup() {
 void loop() {
   if (Bluetooth.available()){ //wait for data received
     cmd=Bluetooth.read();
+    //uncomment block bellow to use Serial interface instead of bluetooth. For dev and debugging
    /*if (Serial.available()) {
      cmd = Serial.read();*/
     switch(cmd) {
