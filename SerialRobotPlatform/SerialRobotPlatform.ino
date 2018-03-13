@@ -61,9 +61,14 @@ void PrintDistance() {
   // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echoPin, HIGH);
   // Calculating the distance
-  distance= duration*0.034/2;
-  // Prints the distance on the Serial Monitor
-  SendString_Serial("d;1;1;"+String(distance));
+  long tmp = duration*0.034/2;
+
+  //check if distance changed
+  if (distance != tmp) {
+    distance = tmp;
+    SendString_Serial("d;1;1;"+String(distance));
+  }
+
 }
 
 void CheckCommand() {
