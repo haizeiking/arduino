@@ -63,8 +63,7 @@ void PrintDistance() {
   // Calculating the distance
   distance= duration*0.034/2;
   // Prints the distance on the Serial Monitor
-  Serial.print("d;1;1;");
-  Serial.println(distance);  
+  SendString_Serial("d;1;1;"+String(distance));
 }
 
 void CheckCommand() {
@@ -80,8 +79,6 @@ void ReadSerial(void (*callback)(String)) {
 }
 
 void ApplyCommand(String cmd) {
-  
-  Serial.println(cmd);
   if (cmd[0]=='m') {
     Motor(cmd);  
   }
@@ -178,4 +175,8 @@ void Stop(char motor_id) {
 
   digitalWrite(pinA, LOW);
   digitalWrite(pinB, LOW);
+}
+
+void SendString_Serial(String str) {
+  Serial.println(str);
 }
