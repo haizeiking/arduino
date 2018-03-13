@@ -1,6 +1,6 @@
 #define MOTOR_A 7
 #define MOTOR_B 8
-#define MOTOR_SPEED 6
+#define MOTOR_SPEED 9
 
 void setup() {
     Serial.begin(9600);
