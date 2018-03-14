@@ -61,8 +61,8 @@
 		#define IR_SEND_TIMER4_HS	10
 	#else
 	/* it's probably Leonardo */
-		#define IR_SEND_TIMER1		9
-		//#define IR_SEND_TIMER3	5
+		//#define IR_SEND_TIMER1		9
+		#define IR_SEND_TIMER3	5
 		//#define IR_SEND_TIMER4_HS	13
 	#endif
 

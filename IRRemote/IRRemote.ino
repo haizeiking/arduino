@@ -4,7 +4,7 @@
 IRrecvPCI myReceiver(2);
  
 //Create a sender
-IRsend mySender; 
+//IRsend mySender; 
 
 //Create a decoder object 
 IRdecode myDecoder;   
@@ -20,7 +20,7 @@ void setup() {
 }
  
 void loop() {
-  Send();
+  //Send();
   Read();
 }
 
@@ -37,10 +37,10 @@ void Send (void) {
   long code=0; delay(100);
   if (Serial.available()>0) {
     String s = Serial.readString();
-
+    
     code = GetCodeFromHex(s);
-    Serial.println(Value);
-    mySender.send(7, Value, 32);
+    Serial.println(s);
+    //mySender.send(7, code, 32);
   };
 }
 
