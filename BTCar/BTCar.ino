@@ -7,7 +7,7 @@
 #define MOTOR_B 8
 #define MOTOR_SPEED 6
 #define SERVO 5
-#define FRONT_LIGHTS 11
+#define FRONT_LIGHTS 13
 #define REAR_LIGHTS 12
 
 // servo limits 30 - 90 - 150
@@ -20,6 +20,7 @@ Servo myservo;  // create servo object to control a servo
 uint16_t speed = 0;
 
 void setup() {
+  delay(2000);
   Bluetooth.begin(9600);
   Serial.begin(9600);
   Serial.println("Waiting for command...");
@@ -36,6 +37,7 @@ void setup() {
 void loop() {
   if (Bluetooth.available()){ //wait for data received
     cmd=Bluetooth.read();
+   // Serial.println(cmd);
     //uncomment block bellow to use Serial interface instead of bluetooth. For dev and debugging
    /*if (Serial.available()) {
      cmd = Serial.read();*/
