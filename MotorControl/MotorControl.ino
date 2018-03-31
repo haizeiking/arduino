@@ -1,9 +1,12 @@
 #define MOTOR_A 7
 #define MOTOR_B 8
-#define MOTOR_SPEED 9
+#define MOTOR_SPEED 11
 
 void setup() {
     Serial.begin(9600);
+
+    pinMode(4, OUTPUT);
+    digitalWrite(4,HIGH);
 
     pinMode(MOTOR_A, OUTPUT);
     pinMode(MOTOR_B, OUTPUT);
