@@ -1,0 +1,2 @@
+int GetSharpDistance();
+int GetSonarDistance();

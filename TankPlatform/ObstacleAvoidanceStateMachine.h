@@ -1,0 +1,1 @@
+void ObstacleAvoidance(bool enable);
