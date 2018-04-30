@@ -26,13 +26,14 @@ void setup() {
     Serial.println("Testing motors");
     
     //TestMovements();
-
+    delay(1000);
     Serial.println("TankPlatform Ready");
 }
 
 void loop() {
   BluetoothComm();
   //ObstacleAvoidance(true);
+  run_state_machine();
 }
 
 

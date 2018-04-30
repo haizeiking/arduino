@@ -122,7 +122,7 @@ void CarBackwardLeft() {
 }
 
 // Motor Commands
-void MotorBackward(int speed) {
+void MotorForward(int speed) {
     digitalWrite(M1_A, HIGH);
     digitalWrite(M1_B, LOW);
     analogWrite(M1_S, speed);
@@ -132,7 +132,7 @@ void MotorBackward(int speed) {
     analogWrite(M2_S, speed);
 }
 
-void MotorForward(int speed) {
+void MotorBackward(int speed) {
     digitalWrite(M1_A, LOW);
     digitalWrite(M1_B, HIGH);
     analogWrite(M1_S, speed);

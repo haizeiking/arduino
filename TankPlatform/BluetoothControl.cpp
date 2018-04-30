@@ -2,6 +2,7 @@
 #include "Arduino.h"
 #include <SoftwareSerial.h>
 #include "MotorControl.h"
+#include "ObstacleAvoidanceStateMachine.h"
 
 
 // Bluetooth
@@ -16,6 +17,18 @@ void Disconnect() {
 
 void BT_Setup() {
     Bluetooth.begin(9600);
+}
+
+void Auto(char cmd) {
+  if (cmd == 'X') {
+    Serial.println("Auto enabled");
+    ObstacleAvoidance(true);
+
+  } else if (cmd == 'x') {
+    Serial.println("Auto disabled");
+    ObstacleAvoidance(false);
+    Stop();
+  }
 }
 
 void BluetoothComm() {
@@ -60,7 +73,7 @@ void BluetoothComm() {
       break;
       case 'X':
       case 'x':
-        //Extra(cmd);
+        Auto(cmd);
       break;
       default:
         MotorSpeed(cmd);
